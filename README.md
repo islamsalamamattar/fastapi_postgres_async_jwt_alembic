@@ -222,5 +222,5 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 ## Acknowledgements
 Special thanks to the authors and contributors of FastAPI, SQLAlchemy, and Alembic for their fantastic work and contributions. Additionally, I acknowledge the following project for providing inspiration and insights: 
-- [FastAPI JWT Authentication Full Example](https://github.com/sabuhibrahim/fastapi-jwt-auth-full-example).
-
+- [sabuhibrahim/ FastAPI JWT Authentication Full Example](https://github.com/sabuhibrahim/fastapi-jwt-auth-full-example).
+- [ThomasAitken/ demo-fastapi-async-sqlalchemy](https://github.com/ThomasAitken/demo-fastapi-async-sqlalchemy).
