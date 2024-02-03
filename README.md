@@ -1,4 +1,4 @@
-# FastAPI Postgres Async boilerplate template
+# Async FastAPI, JWT Authentication, PostgreSQL DB, Alembic Migrations boilerplate template
 
 ## Description
 
