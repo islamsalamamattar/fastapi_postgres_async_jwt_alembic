@@ -1,16 +1,26 @@
 # FastAPI Postgres Async boilerplate template
 
 ## Description
-Async FastAPI implementation using PostgresSQL as database, JWT and Oauth2 authntication, and Alembic auto-migrations.
 
-## stack
-- python
-- fastapi
-- SQLAlqemy
-- pydantic
-- alembic
+This project offers an asynchronous FastAPI implementation with robust authentication APIs, including user registration, login, email verification, and comprehensive password management (forgot, reset, and update).
+Leveraging asynchronous processing for improved performance, it seamlessly integrates JWT (JSON Web Tokens) authentication for secure user authentication and authorization.
+Furthermore, the application utilizes PostgreSQL as the database backend, managed asynchronously with SQLAlchemy ORM.
+To ensure database schema evolution is hassle-free, Alembic auto-migrations are incorporated into the project.
 
-- postgres
+## Stack
+- Python: The programming language used for development.
+- FastAPI: A modern, fast (high-performance) web framework for building APIs with Python.
+- SQLAlchemy: A powerful and flexible ORM (Object-Relational Mapping) library for working with relational databases.
+- Pydantic: A data validation and settings management library, used for defining schemas and validating data in FastAPI applications.
+- Alembic: A lightweight database migration tool for SQLAlchemy, facilitating easy management of database schema changes.
+- PostgreSQL: A robust open-source relational database management system.
+- Asyncpg: An asynchronous PostgreSQL database driver for Python.
+- Passlib: A password hashing library for secure password storage.
+- Pydantic-settings: A Pydantic extension for managing settings and configurations.
+- Python-jose: A JWT (JSON Web Tokens) implementation for Python.
+- Python-multipart: A library for parsing multipart/form-data requests, often used for file uploads in FastAPI applications.
+- Uvicorn: ASGI server implementation used to run FastAPI applications.
+
 
 ## Instalation
 
@@ -206,4 +216,11 @@ alembic upgrade head
 ```
 uvicorn app.main:app
 ```
+
+## License
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+## Acknowledgements
+Special thanks to the authors and contributors of FastAPI, SQLAlchemy, and Alembic for their fantastic work and contributions. Additionally, I acknowledge the following project for providing inspiration and insights: 
+- [FastAPI JWT Authentication Full Example](https://github.com/sabuhibrahim/fastapi-jwt-auth-full-example).
 
