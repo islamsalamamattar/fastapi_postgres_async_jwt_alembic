@@ -1,5 +1,8 @@
 # FastAPI Postgres Async boilerplate template
 
+## Description
+Async FastAPI implementation using PostgresSQL as database, JWT and Oauth2 authntication, and Alembic auto-migrations.
+
 ## stack
 - python
 - fastapi
