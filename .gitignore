@@ -1,0 +1,12 @@
+# Ignore cache files
+__pycache__/
+
+# Ignore Alembic configuration file
+alembic.ini
+
+# Ignore Alembic migrations
+app/alembic/versions/
+
+# Ignore .env file
+.env
+
