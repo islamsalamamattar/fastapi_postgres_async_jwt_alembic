@@ -20,7 +20,7 @@ from app.core.jwt import (
     SUB, JTI, EXP,
 )
 
-from app.utils.mails import user_mail_event
+from app.utils.mail import user_mail_event
 from app.utils.hash import hash_password, verify_password
 
 from app.models import User, BlackListToken

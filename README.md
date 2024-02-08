@@ -2,43 +2,29 @@
 
 ## Description
 
-This project offers an asynchronous FastAPI implementation with robust authentication APIs, including user registration, login, email verification, and comprehensive password management (forgot, reset, and update).
-Leveraging asynchronous processing for improved performance, it seamlessly integrates JWT (JSON Web Tokens) authentication for secure user authentication and authorization.
-Furthermore, the application utilizes PostgreSQL as the database backend, managed asynchronously with SQLAlchemy ORM.
+This project offers an asynchronous FastAPI implementation with robust authentication APIs, including user registration, login, email verification, and comprehensive password management (forgot, reset, and update).  
+Leveraging asynchronous processing for improved performance, it seamlessly integrates JWT (JSON Web Tokens) authentication for secure user authentication and authorization.  
+Furthermore, the application utilizes PostgreSQL as the database backend, managed asynchronously with SQLAlchemy ORM.  
 To ensure database schema evolution is hassle-free, Alembic auto-migrations are incorporated into the project.
-
-## Stack
-* Python: The programming language used for development.
-* FastAPI: A modern, fast (high-performance) web framework for building APIs with Python.
-* SQLAlchemy: A powerful and flexible ORM (Object-Relational Mapping) library for working with relational databases.
-* Pydantic: A data validation and settings management library, used for defining schemas and validating data in FastAPI applications.
-* Alembic: A lightweight database migration tool for SQLAlchemy, facilitating easy management of database schema changes.
-* PostgreSQL: A robust open-source relational database management system.
-* Asyncpg: An asynchronous PostgreSQL database driver for Python.
-* Passlib: A password hashing library for secure password storage.
-* Pydantic-settings: A Pydantic extension for managing settings and configurations.
-* Python-jose: A JWT (JSON Web Tokens) implementation for Python.
-* Python-multipart: A library for parsing multipart/form-data requests, often used for file uploads in FastAPI applications.
-* Uvicorn: ASGI server implementation used to run FastAPI applications.
 
 
 ## Installation
 
-- clone repository
+#### clone repository
 ```bash
 git clone https://github.com/islamsalamamattar/fastapi_postgres_async_alembic.git
 ```
 
-- create venv & install requirements
+#### create venv & install requirements
 ```bash
-cd fastapi_postgres
+cd fastapi_postgres_async_alembic
 pip install virtualenv
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-- create postgres DB
+#### create postgres DB
 ```
 psql -U postgres
 ```
@@ -53,12 +39,12 @@ GRANT ALL PRIVILEGES ON SCHEMA public TO dbadmin;
 \q
 ```
 
-- create a secret key for hashing passwords
+#### create a secret key for hashing passwords
 ```bash
 openssl rand -hex 32
 ```
 
-- create .env to store enviroment variables
+#### create .env to store enviroment variables
 ```bash
 nano .env
 ```
@@ -73,29 +59,29 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 REFRESH_TOKEN_EXPIRES_MINUTES = 30
 ```
 
-- Intiate alembic migrations
+#### Intiate alembic migrations
 ```bash
 alembic init app/alembic
 ```
-- update alembic script by replacing the content of app/alembic/env.py with the env.py.example
+#### update alembic script by replacing the content of app/alembic/env.py with the env.py.example
 ```bash
 cat env.py.example > app/alembic/env.py
 ```
 
-- create migration intial migration and upgrade head
+#### create migration intial migration and upgrade head
 ```bash
 alembic revision --autogenerate -m "Create User, BlackListToken, Blog and Post Tables"
 alembic upgrade head
 ```
 
-- Start the app
+#### Start the app
 ```
 uvicorn app.main:app
 ```
 
 ## Project structure
 ```
-fastapi_postgres_template
+fastapi_postgres_async_alembic
 ├─ app
 │  ├─ alembic
 │  │  ├─ README
@@ -134,13 +120,29 @@ fastapi_postgres_template
 ├─ README.md
 ├─ env.py.example
 └─ requirements.txt
-
 ```
+
+
+## Stack
+Python: The programming language used for development.  
+FastAPI: A modern, fast (high-performance) web framework for building APIs with Python.  
+SQLAlchemy: A powerful and flexible ORM (Object-Relational Mapping) library for working with relational databases.  
+Pydantic: A data validation and settings management library, used for defining schemas and validating data in FastAPI applications.  
+Alembic: A lightweight database migration tool for SQLAlchemy, facilitating easy management of database schema changes.  
+PostgreSQL: A robust open-source relational database management system.  
+Asyncpg: An asynchronous PostgreSQL database driver for Python.  
+Passlib: A password hashing library for secure password storage.  
+Pydantic-settings: A Pydantic extension for managing settings and configurations.  
+Python-jose: A JWT (JSON Web Tokens) implementation for Python.  
+Python-multipart: A library for parsing multipart/form-data requests, often used for file uploads in FastAPI applications.  
+Uvicorn: ASGI server implementation used to run FastAPI applications.
 
 ## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Acknowledgements
-Special thanks to the authors and contributors of FastAPI, SQLAlchemy, and Alembic for their fantastic work and contributions. Additionally, I acknowledge the following project for providing inspiration and insights: 
-- [sabuhibrahim/ FastAPI JWT Authentication Full Example](https://github.com/sabuhibrahim/fastapi-jwt-auth-full-example)
-- [ThomasAitken/ demo-fastapi-async-sqlalchemy](https://github.com/ThomasAitken/demo-fastapi-async-sqlalchemy)
+Special thanks to the authors and contributors of  
+[FastAPI](https://fastapi.tiangolo.com/), [SQLAlchemy](https://www.sqlalchemy.org/), and [Alembic](https://pypi.org/project/alembic/) for their fantastic work and contributions.  
+Additionally, I acknowledge the following project for providing inspiration and insights:  
+[sabuhibrahim/ FastAPI JWT Authentication Full Example](https://github.com/sabuhibrahim/fastapi-jwt-auth-full-example)  
+[ThomasAitken/ demo-fastapi-async-sqlalchemy](https://github.com/ThomasAitken/demo-fastapi-async-sqlalchemy)
