@@ -59,16 +59,12 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 REFRESH_TOKEN_EXPIRES_MINUTES = 30
 ```
 
-#### Intiate alembic migrations
+#### Intiate alembic migrations and update script
 ```bash
 alembic init app/alembic
-```
-#### update alembic script by replacing the content of app/alembic/env.py with the env.py.example
-```bash
 cat env.py.example > app/alembic/env.py
 ```
-
-#### create migration intial migration and upgrade head
+#### Generate intial migration and upgrade head
 ```bash
 alembic revision --autogenerate -m "Create User, BlackListToken, Blog and Post Tables"
 alembic upgrade head
