@@ -8,7 +8,7 @@ from jose import JWTError, jwt
 from app.models.user import User
 from app.models.jwt import BlackListToken
 from app.schemas.jwt import JwtTokenSchema, TokenPair
-from app.schemas.user import MailTaskSchema
+from app.schemas.mail import MailTaskSchema
 from app.core.exceptions import AuthFailedException
 from app.core.config import (
     ACCESS_TOKEN_EXPIRES_MINUTES,
@@ -69,7 +69,7 @@ def create_token_pair(user: User) -> TokenPair:
 async def decode_access_token(token: str, db: AsyncSession):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        black_list_token = await BlackListToken.get(db=db, id=payload[JTI])
+        black_list_token = await BlackListToken.find_by_id(db=db, id=payload[JTI])
         if black_list_token:
             raise JWTError("Token is blacklisted")
     except JWTError:
@@ -104,10 +104,3 @@ def add_refresh_token_cookie(response: Response, token: str):
         expires=int(exp.timestamp()),
         httponly=True,
     )
-
-
-def user_mail_event(payload: MailTaskSchema):
-    # Send mail to user here
-    # Now printing only token
-    # Token is used for Vefify endpoind
-    print(f"[ Mail Schecma ]: {payload}")

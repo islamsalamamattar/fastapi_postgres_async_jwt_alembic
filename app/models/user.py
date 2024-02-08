@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, select, DateTime, Boolean, func, ForeignKey
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from . import Base
 from app.utils.hash import verify_password,hash_password
@@ -8,8 +9,8 @@ from app.utils.hash import verify_password,hash_password
 
 class User(Base):
     __tablename__ = "users"
-    username = Column(String, primary_key=True, nullable=False)
-    email = Column(String, unique=True, nullable=False)
+    username = Column(String, primary_key=True, index=True, nullable=False)
+    email = Column(String, unique=True, index=True, nullable=False)
     first_name = Column(String, nullable=True)
     last_name = Column(String, nullable=True)
 
@@ -19,6 +20,7 @@ class User(Base):
     is_disabled = Column(Boolean, default=True)
     is_superuser = Column(Boolean, default=False)
 
+    blogs = relationship("Blog", foreign_keys="Blog.created_by")
     
     @classmethod
     async def create(cls, db: AsyncSession, **kwargs):
@@ -30,7 +32,7 @@ class User(Base):
         return new_user
         
     @classmethod
-    async def get(cls, db: AsyncSession, username: str):
+    async def find_by_username(cls, db: AsyncSession, username: str):
         query = select(cls).where(cls.username == username)
         result = await db.execute(query)
         return result.scalars().first()
@@ -43,7 +45,7 @@ class User(Base):
 
     @classmethod
     async def authenticate(cls, db: AsyncSession, username: str, password: str):
-        user = await cls.get(db=db, username=username)
+        user = await cls.find_by_username(db=db, username=username)
         if not user or not verify_password(password, user.password):
             return False
         return user
@@ -51,7 +53,7 @@ class User(Base):
     @classmethod
     async def patch(cls, db: AsyncSession, username: String, **kwargs):
         # Fetch the user from the database
-        user = await cls.get(db, username)
+        user = await cls.find_by_username(db, username)
         if user is None:
             return None
 
@@ -66,7 +68,7 @@ class User(Base):
     @classmethod
     async def delete(cls, db: AsyncSession, username: String):
         # Fetch the user from the database
-        user = await cls.get(db, username)
+        user = await cls.find_by_username(db, username)
         if user is None:
             return None
 
@@ -79,7 +81,7 @@ class User(Base):
     @classmethod
     async def makesuper(cls, db: AsyncSession, username: String):
         # Fetch the user from the database
-        user = await cls.get(db, username)
+        user = await cls.find_by_username(db, username)
         if user is None:
             return None
 

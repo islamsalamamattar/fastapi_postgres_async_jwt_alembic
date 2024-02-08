@@ -14,7 +14,7 @@ class AuthFailedException(HTTPException):
     def __init__(self) -> None:
         super().__init__(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Authenticate failed",
+            detail="Authentication failed",
             headers={"WWW-Authenticate": "Bearer"},
         )
 

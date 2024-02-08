@@ -28,45 +28,7 @@ To ensure database schema evolution is hassle-free, Alembic auto-migrations are 
 ```bash
 git clone https://github.com/islamsalamamattar/fastapi_postgres_async_alembic.git
 ```
-- Project structure
-```
-fastapi_postgres,
-├─ .env,
-├─ README.md,
-├─ alembic.ini,
-├─ app,
-│  ├─ __init__.py,
-│  ├─ alembic,
-│  │  ├─ README,
-│  │  ├─ env.py,
-│  │  ├─ script.py.mako,
-│  │  └─ versions,
-│  ├─ core,
-│  │  ├─ __init__.py,
-│  │  ├─ config.py,
-│  │  ├─ database.py,
-│  │  ├─ exceptions.py,
-│  │  └─ jwt.py,
-│  ├─ main.py,
-│  ├─ models,
-│  │  ├─ __init__.py,
-│  │  ├─ jwt.py,
-│  │  └─ user.py,
-│  ├─ routers,
-│  │  ├─ __init__.py,
-│  │  └─ auth.py,
-│  ├─ schemas,
-│  │  ├─ email.py,
-│  │  ├─ jwt.py,
-│  │  └─ user.py,
-│  └─ utils,
-│     ├─ __init__.py,
-│     ├─ emails.py,
-│     ├─ hash.py,
-│     └─ utcnow.py,
-└─ requirements.txt,
 
-```
 - create venv & install requirements
 ```bash
 cd fastapi_postgres
@@ -115,7 +77,6 @@ REFRESH_TOKEN_EXPIRES_MINUTES = 30
 ```bash
 alembic init app/alembic
 ```
-
 - update alembic script by replacing the content of app/alembic/env.py with the following:
 ```bash
 nano app/alembic/env.py
@@ -215,6 +176,50 @@ alembic upgrade head
 - Start the app
 ```
 uvicorn app.main:app
+```
+
+## Project structure
+```
+fastapi_postgres_template
+├─ app
+│  ├─ alembic
+│  │  ├─ README
+│  │  ├─ env.py
+│  │  └─ script.py.mako
+│  ├─ core
+│  │  ├─ __init__.py
+│  │  ├─ config.py
+│  │  ├─ database.py
+│  │  ├─ exceptions.py
+│  │  └─ jwt.py
+│  ├─ models
+│  │  ├─ __init__.py
+│  │  ├─ blog.py
+│  │  ├─ jwt.py
+│  │  ├─ post.py
+│  │  └─ user.py
+│  ├─ routers
+│  │  ├─ __init__.py
+│  │  ├─ auth.py
+│  │  └─ blog.py
+│  ├─ schemas
+│  │  ├─ blog.py
+│  │  ├─ jwt.py
+│  │  ├─ mail.py
+│  │  ├─ post.py
+│  │  └─ user.py
+│  ├─ utils
+│  │  ├─ __init__.py
+│  │  ├─ hash.py
+│  │  ├─ mails.py
+│  │  └─ utcnow.py
+│  ├─ __init__.py
+│  └─ main.py
+├─ .gitignore
+├─ README.md
+├─ env.py.example
+└─ requirements.txt
+
 ```
 
 ## License

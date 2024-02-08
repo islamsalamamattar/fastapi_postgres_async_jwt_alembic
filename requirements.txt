@@ -8,4 +8,5 @@ pydantic-settings==2.1.0
 pydantic[email]
 python-jose[cryptography]
 python-multipart==0.0.6
+SQLAlchemy==2.0.25
 uvicorn==0.27.0

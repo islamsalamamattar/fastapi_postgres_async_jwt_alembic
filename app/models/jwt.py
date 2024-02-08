@@ -22,7 +22,7 @@ class BlackListToken(Base):
         return token
     
     @classmethod
-    async def get(cls, db: AsyncSession, id: UUID):
+    async def find_by_id(cls, db: AsyncSession, id: UUID):
         query = select(cls).where(cls.id == id)
         result = await db.execute(query)
         return result.scalars().first()

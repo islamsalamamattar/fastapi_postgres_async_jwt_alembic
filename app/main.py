@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from app.routers.auth import router as auth_router
+from app.routers.blog import router as blog_router
 from app.core.config import settings
 from app.core.database import sessionmanager
 from fastapi import FastAPI
@@ -28,10 +29,11 @@ app = FastAPI(lifespan=lifespan, title=settings.project_name, docs_url="/api/doc
 
 @app.get("/")
 async def root():
-    return {"message": "Project MoonShine is Looading......"}
+    return {"message": "Async, FasAPI, PostgreSQL, JWT authntication, Alembic migrations Boilerplate"}
 
 # Routers
 app.include_router(auth_router)
+app.include_router(blog_router)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", reload=True, port=8000)

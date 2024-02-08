@@ -1,8 +1,10 @@
 from typing import Annotated, Any, Optional
 from datetime import datetime
+
 from fastapi import APIRouter, Response, Depends, Cookie, BackgroundTasks, HTTPException
 from fastapi.exceptions import RequestValidationError
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
+
 from pydantic import ValidationError
 
 
@@ -17,8 +19,12 @@ from app.core.jwt import (
     oauth2_scheme,
     SUB, JTI, EXP,
 )
-from app.utils.emails import user_mail_event
+
+from app.utils.mails import user_mail_event
 from app.utils.hash import hash_password, verify_password
+
+from app.models import User, BlackListToken
+
 from app.schemas.user import (
     User as UserSchema,
     UserRegister,
@@ -29,14 +35,13 @@ from app.schemas.user import (
     OldPasswordErrorSchema,
 )
 from app.schemas.jwt import JwtTokenSchema, SuccessResponseScheme
-from app.schemas.email import MailBodySchema, EmailSchema, MailTaskSchema
-from app.models.user import User
-from app.models.jwt import BlackListToken
+from app.schemas.mail import MailBodySchema, EmailSchema, MailTaskSchema
+
 
 
 router = APIRouter(
-    prefix="/api/authenticate",
-    tags=["users"],
+    prefix="/api/auth",
+    tags=["authentication"],
     responses={404: {"description": "Not found"}},
 )
 
@@ -52,7 +57,7 @@ async def register(
     if user:
         raise HTTPException(status_code=400, detail="Email already registered")    
     # check if username taken
-    user = await User.get(db=db, username=data.username)
+    user = await User.find_by_username(db=db, username=data.username)
     if user:
         raise HTTPException(status_code=400, detail="Username is not available, please try a new one.")
     
@@ -62,7 +67,7 @@ async def register(
     await user.create(db=db, **user_data)
 
     # send verify email
-    user = await User.get(db=db, username=data.username)
+    user = await User.find_by_username(db=db, username=data.username)
     user_schema = UserSchema.model_validate(user.__dict__)
     verify_token = mail_token(user_schema)
 
@@ -73,6 +78,15 @@ async def register(
 
     return user_schema
 
+@router.get("/verify", response_model=SuccessResponseScheme)
+async def verify(token: str, db: DBSessionDep):
+    payload = await decode_access_token(token=token, db=db)
+    user = await User.find_by_email(db=db, email=payload[SUB])
+    if not user:
+        raise NotFoundException(detail="User not found")
+
+    await user.patch(db=db, username=user.username, is_disabled = False)
+    return {"msg": "Successfully activated"}
 
 @router.post("/login")
 async def login(
@@ -103,16 +117,6 @@ async def refresh(refresh: Annotated[str | None, Cookie()] = None):
         raise BadRequestException(detail="refresh token required")
     return refresh_token_state(token=refresh)
 
-
-@router.get("/verify", response_model=SuccessResponseScheme)
-async def verify(token: str, db: DBSessionDep):
-    payload = await decode_access_token(token=token, db=db)
-    user = await User.find_by_email(db=db, email=payload[SUB])
-    if not user:
-        raise NotFoundException(detail="User not found")
-
-    await user.patch(db=db, username=user.username, is_disabled = False)
-    return {"msg": "Successfully activated"}
 
 
 @router.post("/logout", response_model=SuccessResponseScheme)
@@ -174,7 +178,7 @@ async def password_update(
     db: DBSessionDep,
 ):
     payload = await decode_access_token(token=token, db=db)
-    user = await User.get(db=db, username=payload[SUB])
+    user = await User.find_by_username(db=db, username=payload[SUB])
     if not user:
         raise NotFoundException(detail="User not found")
 
