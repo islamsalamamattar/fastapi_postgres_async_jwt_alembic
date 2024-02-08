@@ -1,5 +1,3 @@
-# app/alembic/env.py
-
 import asyncio
 import os
 from dotenv import load_dotenv
