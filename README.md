@@ -126,7 +126,7 @@ fastapi_postgres_template
 │  ├─ utils
 │  │  ├─ __init__.py
 │  │  ├─ hash.py
-│  │  ├─ mails.py
+│  │  ├─ mail.py
 │  │  └─ utcnow.py
 │  ├─ __init__.py
 │  └─ main.py
