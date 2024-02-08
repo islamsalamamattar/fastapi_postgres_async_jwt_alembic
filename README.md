@@ -66,7 +66,7 @@ cat env.py.example > app/alembic/env.py
 ```
 #### Generate intial migration and upgrade head
 ```bash
-alembic revision --autogenerate -m "Create User, BlackListToken, Blog and Post Tables"
+alembic revision --autogenerate -m "Create User, BlackListToken, Blog, and Post Tables"
 alembic upgrade head
 ```
 
