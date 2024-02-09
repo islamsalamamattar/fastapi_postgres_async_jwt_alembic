@@ -84,6 +84,6 @@ class Blog(Base):
     
     @classmethod
     async def check_availability(cls, db: AsyncSession, created_by: UUID, title: str):
-        query = select(cls).where(and_(cls.created_by == created_by, cls.title == title))
+        query = select(cls).where(and_(cls.created_by == created_by, cls.title == title, cls.is_deleted.is_(False)))
         result = await db.execute(query)
         return result.scalars().first() is None
