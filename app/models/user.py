@@ -1,4 +1,5 @@
-from sqlalchemy import Column, String, select, DateTime, Boolean, func, ForeignKey
+from uuid import uuid4
+from sqlalchemy import Column, String, select, DateTime, Boolean, func, ForeignKey, UUID
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -9,7 +10,8 @@ from app.utils.hash import verify_password,hash_password
 
 class User(Base):
     __tablename__ = "users"
-    username = Column(String, primary_key=True, index=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid4)
+    username = Column(String, index=True, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     first_name = Column(String, nullable=True)
     last_name = Column(String, nullable=True)
@@ -31,6 +33,12 @@ class User(Base):
         await db.refresh(new_user)
         return new_user
         
+    @classmethod
+    async def find_by_id(cls, db: AsyncSession, id:UUID):
+        query = select(cls).where(cls.id == id)
+        result = await db.execute(query)
+        return result.scalars().first()
+            
     @classmethod
     async def find_by_username(cls, db: AsyncSession, username: str):
         query = select(cls).where(cls.username == username)

@@ -79,7 +79,10 @@ async def register(
     return user_schema
 
 @router.get("/verify", response_model=SuccessResponseScheme)
-async def verify(token: str, db: DBSessionDep):
+async def verify(
+    token: str,
+    db: DBSessionDep
+):
     payload = await decode_access_token(token=token, db=db)
     user = await User.find_by_email(db=db, email=payload[SUB])
     if not user:

@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from app.routers.auth import router as auth_router
 from app.routers.blog import router as blog_router
+from app.routers.post import router as post_router
 from app.core.config import settings
 from app.core.database import sessionmanager
 from fastapi import FastAPI
@@ -34,6 +35,7 @@ async def root():
 # Routers
 app.include_router(auth_router)
 app.include_router(blog_router)
+app.include_router(post_router)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", reload=True, port=8000)

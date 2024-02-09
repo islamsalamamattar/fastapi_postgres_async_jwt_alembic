@@ -1,5 +1,5 @@
 from pydantic import BaseModel, UUID4, validator, EmailStr
-from typing import Any, Optional
+from typing import Any, Optional, List
 from datetime import datetime
 
 class BlogBase(BaseModel):
@@ -7,7 +7,7 @@ class BlogBase(BaseModel):
 
 class Blog(BlogBase):
     id: UUID4
-    created_by: str
+    created_by: UUID4
     created_at: datetime
     is_deleted: bool
 
@@ -20,6 +20,10 @@ class BlogCreate(BlogBase):
 class BlogPatch(BaseModel):
     title: Optional[str] = None
 
+class BlogsList(BaseModel):
+    blogs: List[Blog]
 
-
+class BlogDetails(BaseModel):
+    blog: Blog
+    post_titles: List[str]
 

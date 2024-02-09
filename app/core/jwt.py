@@ -18,7 +18,7 @@ from app.core.config import (
 )
 from sqlalchemy.ext.asyncio import AsyncSession
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="authenticate/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 REFRESH_COOKIE_NAME = "refresh"
 SUB = "sub"

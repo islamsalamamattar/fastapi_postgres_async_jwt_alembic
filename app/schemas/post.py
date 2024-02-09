@@ -1,14 +1,14 @@
 from pydantic import BaseModel, UUID4, validator, EmailStr
-from typing import Any, Optional
+from typing import Any, Optional, List
 from datetime import datetime
 
 class PostBase(BaseModel):
     title: str
     body: str
+    blog_id: UUID4
 
 class Post(PostBase):
     id: UUID4
-    blog: str
     created_at: datetime
     is_deleted: bool
 
@@ -22,6 +22,5 @@ class PostPatch(BaseModel):
     title: Optional[str] = None
     body: Optional[str] = None
 
-
-
-
+class PostsList(BaseModel):
+    posts: List[Post]

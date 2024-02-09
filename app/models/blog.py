@@ -17,13 +17,13 @@ from app.models.user import User
 class Blog(Base):
     __tablename__ = "blogs"
     id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid4)
-    title = Column(String, unique=True, nullable=False)
-    created_by = Column(String, ForeignKey("users.username"), nullable=False)
+    title = Column(String, unique=True, index=True, nullable=False)
+    created_by = Column(UUID, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     is_deleted = Column(Boolean, default=False)
     
     # Define the relationship using string names
-    posts = relationship("Post", foreign_keys="Post.blog_title")
+    posts = relationship("Post", foreign_keys="Post.blog_id")
     
     @classmethod
     async def create(cls, db: AsyncSession, **kwargs):
@@ -42,14 +42,14 @@ class Blog(Base):
     @classmethod
     async def find_all_by_username(cls, db: AsyncSession, username: str):
         user = await User.find_by_username(db, username=username)
-        query = select(cls).where(and_(cls.created_by == user.username, cls.is_deleted.is_(False)))
+        query = select(cls).where(and_(cls.created_by == user.id, cls.is_deleted.is_(False)))
         result = await db.execute(query)
         return result.scalars().all()
         
     @classmethod
     async def find_all_by_email(cls, db: AsyncSession, email: str):
         user = await User.find_by_email(db, email=email)
-        query = select(cls).where(and_(cls.created_by == user.username, cls.is_deleted.is_(False)))
+        query = select(cls).where(and_(cls.created_by == user.id, cls.is_deleted.is_(False)))
         result = await db.execute(query)
         return result.scalars().all()
         
@@ -83,7 +83,7 @@ class Blog(Base):
         return blog
     
     @classmethod
-    async def check_availability(cls, db: AsyncSession, created_by: str, title: str):
+    async def check_availability(cls, db: AsyncSession, created_by: UUID, title: str):
         query = select(cls).where(and_(cls.created_by == created_by, cls.title == title))
         result = await db.execute(query)
         return result.scalars().first() is None
