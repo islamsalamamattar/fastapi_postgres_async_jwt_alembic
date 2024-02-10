@@ -120,18 +120,18 @@ fastapi_postgres_async_alembic
 
 
 ## Stack
-Python: The programming language used for development.  
-FastAPI: A modern, fast (high-performance) web framework for building APIs with Python.  
-SQLAlchemy: A powerful and flexible ORM (Object-Relational Mapping) library for working with relational databases.  
-Pydantic: A data validation and settings management library, used for defining schemas and validating data in FastAPI applications.  
-Alembic: A lightweight database migration tool for SQLAlchemy, facilitating easy management of database schema changes.  
-PostgreSQL: A robust open-source relational database management system.  
-Asyncpg: An asynchronous PostgreSQL database driver for Python.  
-Passlib: A password hashing library for secure password storage.  
-Pydantic-settings: A Pydantic extension for managing settings and configurations.  
-Python-jose: A JWT (JSON Web Tokens) implementation for Python.  
-Python-multipart: A library for parsing multipart/form-data requests, often used for file uploads in FastAPI applications.  
-Uvicorn: ASGI server implementation used to run FastAPI applications.
+[Python:](https://www.python.org/) The programming language used for development.  
+[FastAPI:](https://fastapi.tiangolo.com/) A modern, fast (high-performance) web framework for building APIs with Python.  
+[SQLAlchemy:](https://www.sqlalchemy.org/) A powerful and flexible ORM (Object-Relational Mapping) library for working with relational databases.  
+[Pydantic:](https://docs.pydantic.dev/latest/) A data validation and settings management library, used for defining schemas and validating data in FastAPI applications.  
+[Alembic:](https://alembic.sqlalchemy.org/) A lightweight database migration tool for SQLAlchemy, facilitating easy management of database schema changes.  
+[PostgreSQL:](https://www.postgresql.org/) A robust open-source relational database management system.  
+[Asyncpg:](https://github.com/MagicStack/asyncpg) An asynchronous PostgreSQL database driver for Python.  
+[Passlib:](https://pypi.org/project/passlib/) A password hashing library for secure password storage.  
+[Pydantic-settings:](https://pypi.org/project/pydantic-settings/) A Pydantic extension for managing settings and configurations.  
+[Python-jose:](https://pypi.org/project/python-jose/) A JWT (JSON Web Tokens) implementation for Python.  
+[Python-multipart:](https://pypi.org/project/python-multipart/) A library for parsing multipart/form-data requests, often used for file uploads in FastAPI applications.  
+[Uvicorn:](https://www.uvicorn.org/) ASGI server implementation used to run FastAPI applications.
 
 ## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
