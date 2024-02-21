@@ -1,7 +1,9 @@
+aitertools==0.1.0
 alembic==1.13.1
 asyncpg==0.29.0
 fastapi==0.109.0
 greenlet==3.0.3
+openai==1.12.0
 passlib==1.7.4
 passlib[bcrypt]
 pydantic-settings==2.1.0
@@ -9,4 +11,5 @@ pydantic[email]
 python-jose[cryptography]
 python-multipart==0.0.6
 SQLAlchemy==2.0.25
+sse_starlette==2.0.0
 uvicorn==0.27.0
